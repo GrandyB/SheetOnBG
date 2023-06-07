@@ -1,0 +1,105 @@
+<!--
+    MIT License
+
+    Copyright (c) 2023 Mark "Grandy" Bishop
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SheetOnBG</title>
+        <meta charset="utf-8" />
+
+        <!-- Link in a Google Font if you fancy! -->
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Mate+SC" />
+
+        <link rel="stylesheet" href="./styles.css" />
+        <script type="text/javascript" src="./GoogleSheetToJS.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+        <script type="text/javascript">
+            // Insert your credentials and sheet target here
+            var apiKey = "";
+            var spreadsheetId = "1qgS3X_KYOuY3sS0Wu_AV5FOyC02mTGGvKi-kR3sH_QI";
+            var tabName = "MyTabName";
+
+            var sheets = new GoogleSheetToJS(apiKey, spreadsheetId, tabName, 2500);
+            sheets.updateLoop();
+        </script>
+
+        <style>
+            /* Set these for global styles. */
+            * {
+                font-family: 'Mate SC';
+                font-weight: bold;
+                font-size: 20px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="container">
+            <!-- Update the 'src' to be your background image. -->
+            <img id="background" src="background-example.png" />
+            <div id="main"></div>
+        </div>
+    </body>
+    <script type="text/javascript">
+        function createItem(data) {
+            var dom = document.getElementById("main");
+
+            var cellsHtml = "";
+            var item = Handlebars.compile(`
+                <div class="item" style="left: {{left}}; top: {{top}}; color: {{color}}; width: {{width}}; height: {{height}};">
+                    <span class="value" id="{{cell}}"></span>
+                </div>
+            `);
+            const html = item(data);
+            dom.innerHTML += html;
+        }
+
+        // Want to make a helper function for repeated properties? (optional)
+        function createCustom(data) {
+            createItem({
+                ...data,
+                'width': "200px",
+                'height': "50px",
+                'left': '25px',
+            });
+        }
+
+        // Create your items!
+        createCustom({
+            'cell': 'A1',
+            'top': '25px',
+            'color': 'black'
+        });
+        createCustom({
+            'cell': 'A2',
+            'top': '85px',
+            'color': 'white'
+        });
+        createCustom({
+            'cell': 'A3',
+            'top': '145px',
+            'color': 'black'
+        });
+        // ...etc!
+    </script>
+</html>
