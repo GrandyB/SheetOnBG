@@ -4,7 +4,7 @@ Javascript/HTML templating tool for slapping Google Sheet data onto a background
 Simple to change and adapt to basically any scenario where you want text on top of an image.
 
 ## Running
-To get this to work:
+To get the example running against its provided test sheet:
 
 1) Grab the latest copy of [GoogleSheetToJS.js](https://github.com/GrandyB/GoogleSheetToJS/blob/master/GoogleSheetToJS.js) and place alongside these files.
 
